@@ -17,13 +17,20 @@
 
     <TextView
         android:textStyle="bold"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You can scroll and choose a category of joke:"
+        android:text="Scroll and select a joke of a specific category:"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:layout_marginBottom="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/idLoadingPB2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/categories"
@@ -36,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_joke"
-        android:text="Get Joke" />
+        android:text="Or just get a random joke" />
 
     <TextView
         android:layout_marginTop="10dp"
@@ -68,7 +75,7 @@
 
     <!--progress bar for loading -->
     <ProgressBar
-        android:id="@+id/idLoadingPB"
+        android:id="@+id/idLoadingPB1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

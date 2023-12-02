@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var lv_categories: ListView
     private lateinit var btn_jokes: Button
     private lateinit var tv_jokes: TextView
-    private lateinit var progressBar: ProgressBar
+    private lateinit var progressBar1: ProgressBar
+    private lateinit var progressBar2: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +31,15 @@ class MainActivity : AppCompatActivity() {
 
         // Find the progress bar and assign
         // it to the variable.
-        progressBar = findViewById(R.id.idLoadingPB)
+        progressBar1 = findViewById(R.id.idLoadingPB1)
+        progressBar2 = findViewById(R.id.idLoadingPB2)
 
         lv_categories = findViewById<ListView>(R.id.categories)
 
         // Set an OnClickListener on the button view.
         btn_jokes.setOnClickListener {
             // show the progress bar
-            progressBar.visibility = View.VISIBLE
+            progressBar1.visibility = View.VISIBLE
 
             // Call the getjokes() method of the ApiCall class,
             // passing a callback function as a parameter.
@@ -46,14 +48,32 @@ class MainActivity : AppCompatActivity() {
                 // joke value returned by the API response.
                 tv_jokes.text = jokes.value
                 // hide the progress bar
-                progressBar.visibility = View.GONE
+                progressBar1.visibility = View.GONE
             }
+        }
+
+        lv_categories.setOnItemClickListener { adapterView, view, position, id ->
+            val category = adapterView.getItemAtPosition(position) as String
+            fetchRandomJoke(category)
         }
 
         fetchCategories()
     }
 
+    private fun fetchRandomJoke(category: String) {
+        progressBar1.visibility = View.VISIBLE
+
+            APiCall().getjokes(this, category) { joke ->
+                runOnUiThread {
+                    tv_jokes.text = joke.value // Display the joke
+                    progressBar1.visibility = View.GONE // Hide progress bar
+                }
+            }
+    }
+
     private fun fetchCategories() {
+        progressBar2.visibility = View.VISIBLE // Show progress bar while loading
+
         APiCall().getCategories(this) { categories ->
             runOnUiThread {
                 val categoriesAdapter = ArrayAdapter(
@@ -62,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     categories // Data
                 )
                 lv_categories.adapter = categoriesAdapter
-                progressBar.visibility = View.GONE // Hide progress bar after loading categories
+                progressBar2.visibility = View.GONE // Hide progress bar after loading categories
             }
         }
     }

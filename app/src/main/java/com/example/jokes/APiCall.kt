@@ -6,7 +6,7 @@ import android.widget.Toast
 import retrofit.*
 
 class APiCall {
-    fun getjokes(context: Context, callback: (DataModel) -> Unit) {
+    fun getjokes(context: Context, category: String? = null, callback: (DataModel) -> Unit) {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.chucknorris.io/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -14,7 +14,7 @@ class APiCall {
 
         val service: ApiService = retrofit.create<ApiService>(ApiService::class.java)
 
-        val call: Call<DataModel> = service.getjokes()
+        val call: Call<DataModel> = service.getjokes(category)
 
         call.enqueue(object : Callback<DataModel> {
             override fun onResponse(response: Response<DataModel>?, retrofit: Retrofit?) {
