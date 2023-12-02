@@ -75,11 +75,13 @@ class MainActivity : AppCompatActivity() {
         progressBar2.visibility = View.VISIBLE // Show progress bar while loading
 
         APiCall().getCategories(this) { categories ->
+            val sortedCategories = categories.sorted()
+
             runOnUiThread {
                 val categoriesAdapter = ArrayAdapter(
                     this, // Context
                     android.R.layout.simple_list_item_1, // Layout for the row
-                    categories // Data
+                    sortedCategories // Sorted Data
                 )
                 lv_categories.adapter = categoriesAdapter
                 progressBar2.visibility = View.GONE // Hide progress bar after loading categories
