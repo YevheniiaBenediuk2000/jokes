@@ -9,3 +9,4 @@ data class DataModel(
     var url:String,
     var value:String
 ):java.io.Serializable
+

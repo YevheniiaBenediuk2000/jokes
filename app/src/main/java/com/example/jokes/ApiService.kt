@@ -12,4 +12,8 @@ interface ApiService {
     // type of DataModel, which represents
     // the data model for the response.
     fun getjokes(): Call<DataModel>
+
+    @GET("jokes/categories")
+    fun getCategories(): Call<List<String>>
+
 }
